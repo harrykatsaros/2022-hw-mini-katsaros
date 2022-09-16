@@ -9,3 +9,13 @@ We first ran the original code given to us and noticed that the LED on the Raspb
 After running the original code, we proceeded to modify the clock divider and fade length in pwm_led_fade.c. We reduced the counter clock value of the Raspberry Pi Pico by modifying the divider value of 4 to 100. The larger divider value triggered the LED cycle on the Raspberry Pi to operate at a faster frequency. In other words, the system clock modification made the LED blink at a faster rate which can be seen in the attached video measurements. 
 
 Another change we made pertained to the fade length. The fade counter was originally incrementing by 1 until it reached the MAX_LED_BRIGHTNESS of 255 and decreasing by 1 until it reached the MIN_LED_BRIGHTNESS of 0. A modification was made so that the fade counter would increase and decrease at a faster clip, in increments of 5 instead of 1. As a result, the cycle further quickened, thus complementing the effect of the clock divider modification.  
+
+
+
+
+https://user-images.githubusercontent.com/75341058/190720390-941872f8-daf7-43f2-8185-8c3b475004a7.mov
+
+
+
+https://user-images.githubusercontent.com/75341058/190720428-8451d384-f04c-4013-9fac-afd760b0c1da.mov
+
