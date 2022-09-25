@@ -1,4 +1,5 @@
-/**
+
+ /**
  * Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,7 +16,7 @@
 #include "pico/time.h"
 #include "hardware/irq.h"
 #include "hardware/pwm.h"
- 
+
 #ifndef PICO_DEFAULT_LED_PIN
 #error pwm/led_fade example requires a board with a regular LED
 #endif
@@ -25,19 +26,19 @@
 
 void on_pwm_wrap() {
 // this is the interrupt handler, called each time the PWM counter wraps
-    static uint16_t fade = 0;
+    static int fade = 0;
     static bool going_up = true;
     // Clear the interrupt flag that brought us here
     pwm_clear_irq(pwm_gpio_to_slice_num(PICO_DEFAULT_LED_PIN));
 
     if (going_up) {
-        fade=fade+5;
+        ++fade;
         if (fade > MAX_LED_BRIGHTNESS) {
             fade = MAX_LED_BRIGHTNESS;
             going_up = false;
         }
     } else {
-        fade=fade-5;
+        --fade;
         if (fade < MIN_LED_BRIGHTNESS) {
             fade = MIN_LED_BRIGHTNESS;
             going_up = true;
@@ -68,7 +69,7 @@ int main(void) {
     // counter is allowed to wrap over its maximum range (0 to 2**16-1)
     pwm_config config = pwm_get_default_config();
     // Set divider, reduces counter clock to sysclock/this value
-    pwm_config_set_clkdiv(&config, 20.f);
+    pwm_config_set_clkdiv(&config, 15.f);
     // Load the configuration into our PWM slice, and set it running.
     pwm_init(slice_num, &config, true);
 
